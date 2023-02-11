@@ -1,11 +1,11 @@
 package com.example.whattheweatherlike
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
 class WeatherRecycleAdapter(private var weatherList: ArrayList<Weather>) :  RecyclerView.Adapter<WeatherRecycleAdapter.ViewHolder>() {
@@ -13,6 +13,7 @@ class WeatherRecycleAdapter(private var weatherList: ArrayList<Weather>) :  Recy
         var city = view.findViewById(R.id.cityName) as TextView
         var temp = view.findViewById(R.id.cityTemp) as TextView
         var humidity = view.findViewById(R.id.cityHumidity) as TextView
+        var icon: ImageView?= view.findViewById(R.id.weatherView)?: null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,6 +24,12 @@ class WeatherRecycleAdapter(private var weatherList: ArrayList<Weather>) :  Recy
         holder.city.text = this.weatherList[position].city
         holder.temp.text = this.weatherList[position].temp
         holder.humidity.text = this.weatherList[position].humidity
+        if (holder.icon != null) {
+            // todo set icon for ImageView
+        }
+        else {
+            Log.d("myLog", "null")
+        }
     }
 
     override fun getItemCount(): Int {

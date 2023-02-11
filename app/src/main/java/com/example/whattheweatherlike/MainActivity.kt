@@ -39,14 +39,16 @@ class MainActivity : AppCompatActivity() {
 
         weatherAadapter = WeatherRecycleAdapter(this.weatherInfoList as ArrayList<Weather>)
 
-        if (findViewById<ImageView>(R.id.weatherView) == null){
+        if (findViewById<ImageView>(R.id.rLayoutLand) == null){
             binding.weatherList.apply {
+                Log.d("myLog", "verical orientation")
                 layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
                 adapter = weatherAadapter
             }
         }
         else {
             binding.weatherList.apply {
+                Log.d("myLog", "horizontal orientation")
                 layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
                 adapter = weatherAadapter
             }
