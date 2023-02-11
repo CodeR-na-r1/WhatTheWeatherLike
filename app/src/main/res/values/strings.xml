@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">WhatTheWeatherLike</string>
+    <string name="label_add_city">Добавить город</string>
+    <string name="app_header">Узнать погоду</string>
+    <string name="label_view_weather">Просмотр погоды</string>
+    <string name="label_inter_city">Название города: </string>
+    <string name="text_btn_add_city">Добавить</string>
+    <string name="text_btn_upd_temp">Обновить погоду</string>
+    <string name="results_header">Информация о погоде:</string>
+    <string name="results_city">Погода для города -> </string>
+    <string name="results_temp">Температура:</string>
+    <string name="results_temp_1">Ощущается как:</string>
+    <string name="results_speed_wind">Скорость ветра:</string>
+    <string name="results_deg_wind">Направление ветра:</string>
+    <string name="results_humidity">Влажность:</string>
+    <string name="results_day_duration">Долгота дня:</string>
+    <string name="API_KEY">d28980848c35a73434530c5f951676f4</string>
+</resources>
