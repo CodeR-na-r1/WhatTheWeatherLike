@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
@@ -15,8 +16,11 @@ import java.net.URL
 import java.util.*
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
 import org.json.JSONObject
+import java.lang.reflect.Type
 import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 import kotlin.time.Duration
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("myLog", "onCreate")
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
@@ -94,10 +99,9 @@ class MainActivity : AppCompatActivity() {
 
             weather.temp = jsonObj.getJSONObject("main").getString("temp").let { "$it°" }
             weather.humidity = jsonObj.getJSONObject("main").getString("humidity").let { "$it%" }
+            weather.iconName = JSONObject(jsonObj.getJSONArray("weather").getString(0)).getString("icon").let { "_${it.subSequence(1, it.length)}.png" }
         } catch (e: Exception) {
-            if (weather.city == "") {
                 weather.city = "Ошибка запроса! (проверьте название города)"
-            }
         }
 
         return weather
@@ -118,6 +122,31 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 weatherAadapter.updateData(ArrayList<Weather>(weatherInfoList))
             }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("myLog", "onPause")
+
+        val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+        val dataCities = Gson().toJson(this.cities)
+        sharedPreferences.edit().putString("citiesData", dataCities).apply()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("myLog", "onResume")
+
+        val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+        val dataCitiesJson = sharedPreferences.getString("citiesData", "")
+
+        if (!dataCitiesJson.isNullOrBlank()) {
+            val type: Type = object : TypeToken<MutableList<String>>() {}.type
+            this.cities = Gson().fromJson<MutableList<String>>(dataCitiesJson, type)
+        }
+        else{
+            Log.d("myLog", "Error Load Data!")
         }
     }
 }
