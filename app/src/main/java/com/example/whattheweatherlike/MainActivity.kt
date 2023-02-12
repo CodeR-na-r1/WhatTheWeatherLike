@@ -102,7 +102,9 @@ class MainActivity : AppCompatActivity() {
 
             weather.temp = jsonObj.getJSONObject("main").getString("temp").let { "$it°" }
             weather.humidity = jsonObj.getJSONObject("main").getString("humidity").let { "$it%" }
-            weather.iconName = JSONObject(jsonObj.getJSONArray("weather").getString(0)).getString("icon").let { "_${it.subSequence(1, it.length)}.png" }
+
+            val iconName = JSONObject(jsonObj.getJSONArray("weather").getString(0)).getString("icon").let { "_${it.subSequence(1, it.length)}" }
+            weather.iconId = resources.getIdentifier(iconName, "drawable", packageName)
         } catch (e: Exception) {
                 weather.city = "Ошибка запроса! (проверьте название города)"
         }

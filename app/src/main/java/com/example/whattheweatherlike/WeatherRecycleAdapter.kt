@@ -25,10 +25,7 @@ class WeatherRecycleAdapter(private var weatherList: ArrayList<Weather>) :  Recy
         holder.temp.text = this.weatherList[position].temp
         holder.humidity.text = this.weatherList[position].humidity
         if (holder.icon != null) {
-            // todo set icon for ImageView
-        }
-        else {
-            Log.d("myLog", "null")
+            holder.icon?.setImageResource(this.weatherList[position].iconId)
         }
     }
 
